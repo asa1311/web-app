@@ -1,0 +1,167 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title >Galeria </title>
+    </head>
+    <style>
+        .contenedor{
+            width:90%;
+            max-width:1200px;
+            margin-left: 200px; 
+  padding: 0px 10px;
+        }
+        #galeria{
+            border: 1px dotted black;
+  overflow: hidden;
+  width: 1000px;
+        }
+        header{
+            padding:20px 0;
+            text-align:center;
+            margin-bottom:20px;
+        }
+        .categorias{
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+
+        }
+        a{
+            text-decoration: none;
+        }
+        .categorias a{
+            color:#745b5b;
+            margin: 10px 20px;
+            font-size: 18px;
+            font-weight:700;
+      
+
+        }
+        .categorias a.activo{
+            color:black;
+        }
+        .element {
+  width: 310px;
+  height: 350px;
+  float: left;
+  margin : 5px;
+}
+body{
+    background-color: rgb(235, 230, 230);
+}
+.sidenav {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(100, 71, 71);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a,h1{
+  padding: 20px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 30px;
+  color: #0e0d0d;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav form{
+    padding-left: 20;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+    </style>
+    <body>
+        <div class="sidenav">
+            <h1>Galeria de imágenes</h1> 
+            <form action= "" enctype=multipart/form-data method="POST">
+            <div>{{ result.message }}</div>    
+            <input type="submit" value="Publicar">   
+            <br>
+            <br>
+            <input type="file" name="inputFile" required>
+            <br>
+            <br>
+            <input type="radio" id="Pública" name="Privacidad" value="Publica" required>
+            <label for="Pública">Pública</label><br>
+            <input type="radio" id="Privada" name="Privacidad" value="Privada">
+            <label for="Privada">Privada</label><br>
+            </form>
+            <br>
+            <br>
+            <form action= "{{url_for('actualizarFoto')}}" enctype=multipart/form-data method="POST">
+                <input type="hidden" id="id" name="id">
+                <input type="submit" value="Actualizar">   
+                <br>
+                <p><label>Nombre de imagen: <input type="text" name="actualizar" id="actualizar"></label></p>
+                <input type="radio" id="Publica2" name="Privacidad2" value="Publica">
+                <label for="Pública2">Pública</label><br>
+                <input type="radio" id="Privada2" name="Privacidad2" value="Privada">
+                <label for="Privada2">Privada</label><br> 
+             </form>   
+            <a href="#borrar" id="dropzone">Borrar</a>
+          </div>
+        <div class="contenedor">
+            <header>
+                <h1> Galería de imágenes </h1>
+            </header>
+
+        <div class="categorias">
+
+            <div id="galeria">
+     
+                {%for imagen in myuser%} 
+				<img class="element draggable-imagen" data-filename="{{imagen[1]}}" data-nombre="{{imagen[3]}}" data-privacidad="{{imagen[2]}}" id="{{imagen[0]|string}}" src="{{ url_for('static', filename='files/'+imagen[1]) }}" alt=""/>
+				{%endfor%} 
+     
+            </div>
+        </div>
+    
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script>
+	$(".draggable-imagen").draggable();
+	$("#dropzone").droppable({
+		drop: function(event, ui) {
+            var id=$(ui.draggable).attr("id");
+            var filename=$(ui.draggable).attr("data-filename");
+			window.location.href="{{url_for('eliminarFoto')}}?id="+id+"&filename="+filename;
+			$(this).css('background', 'rgb(0,200,0)');
+		},
+		over: function(event, ui) {
+			$(this).css('background', 'orange');
+		},
+		out: function(event, ui) {
+			$(this).css('background', 'cyan');
+		}
+    });
+    $(".draggable-imagen").click(function(){
+
+        $("#id").val($(this).attr("id"));
+        $("#actualizar").val($(this).attr("data-nombre"));
+        if ($(this).attr("data-privacidad")=='Privada'){
+            $("#Privada2").prop("checked",true);
+        }else{
+
+            $("#Publica2").prop("checked",true);
+        }
+ 
+        
+
+    });
+
+</script>
+    </body>
+</html>

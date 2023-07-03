@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi Galeria</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/styles.css')}}">
+</head>
+<body>
+	<header>
+		<div class="header">
+			<img id="logo" src="{{ url_for('static', filename='images/logo.png')}}"/>
+			<form  action="{{url_for('pagina')}}" method="POST">
+			<button id="button-login" type="submit">Cerrar sesión</button></form>
+			<form action="{{url_for('buscar')}}" enctype=multipart/form-data method="POST">
+				<label for="search" class="form-group">
+					
+					<button type="submit" class="icon-search"></button></span>
+					<input type="text" name="search" id="search" placeholder="Buscar">
+				</label>
+				</form>
+			<div id="logo-account"></div>
+		</div>
+	</header>
+	<section>
+		<div class="container-gallery-example">
+			<div>
+				<button id="my-gallery-button" onClick="parent.open('Galeria')">Mi galeria</button>
+			</div>
+			<div>
+				{%for imagen in myuser%} 
+				   {% if imagen[2]=="Privada" %}
+					 <img class="image-example" src="{{ url_for('static', filename='files/'+imagen[1]) }}" alt=""/>
+				   {% else %}
+				     <a href="{{ url_for('static', filename='files/'+imagen[1]) }}" download={{imagen[3]}}><img class="image-example" src="{{ url_for('static', filename='files/'+imagen[1]) }}" alt=""/></a>
+				   {% endif %}
+				{%endfor%} 
+			</div>
+		</div>
+		<div class="container-gallery">
+			{%for imagen in user%} 
+				   {% if imagen[2]=="Privada" %}
+					 <img class="image-view" src="{{ url_for('static', filename='files/'+imagen[1]) }}" alt=""/>
+				   {% else %}
+				     <a href="{{ url_for('static', filename='files/'+imagen[1]) }}" download={{imagen[3]}}><img class="image-view" src="{{ url_for('static', filename='files/'+imagen[1]) }}" alt=""/></a>
+				   {% endif %}
+				   <br>
+				   <br>
+				{%endfor%} 
+
+		</div>
+	</section>
+</body>
+</html>
