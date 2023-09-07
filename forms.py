@@ -20,6 +20,6 @@ class RegistrarForm(FlaskForm):
     enviar=SubmitField('Siguiente')
     name=StringField('Nombre')
     user=StringField('Usuario')
-    email=StringField('Correa')
+    email=StringField('Correo')
     contra=PasswordField('Contraseña')   
 
