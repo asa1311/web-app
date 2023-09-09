@@ -8,12 +8,36 @@ Para crear la cuenta es necesario rellenar todos los campos del formulario. Si e
 
 <img src="Registro.png">
 
-## Activación de cuenta (ruta: /confirmar_correo/<activación>)
-
-El usuario tiene 600 segundos para acceder a este link y, una vez ingrese, se indica un mensaje con la activación exitosa y la actualización de la variable activo a 1 en la base de datos. Si no accede en este tiempo, el enlace deja de ser funcional enviando un mensaje de que ha expirado.
+El usuario tiene 10 minutos para acceder a este link y, una vez ingrese, se indica un mensaje con la activación exitosa y la actualización en la base de datos. Si no accede en este tiempo, el enlace deja de ser funcional enviando un mensaje que ha expirado.
 
 <img src="confirmarcorreo.png">
 
 ## Inicio de sesión (ruta: /Iniciosesion)
 
 <img src="iniciosesion.png">
+
+## Olvidar contraseña (ruta: /Olvidar)
+
+Si el correo existe en la base de datos, se envía un correo desde Python gracias a la librería *yagmail*, utilizando una cuenta previamente creada para esta función y que también se utiliza para enviar un mensaje al crear la cuenta exitosamente. Al enviar la cuenta, la función redirige a la plantilla de Iniciar sesión.
+
+<img src="Olvidarcontraseña.png">
+
+Al igual que en la confirmación del correo al crear una nueva cuenta, este enlace tiene una duración de 10 minutos.
+
+<img src="recuperarcontraseña.png">
+
+## Perfil (ruta: /perfil)
+
+Se puede acceder a la galería, descargar las imágenes públicas con un clic y buscar por palabras claves las imágenes públicas que contengan esa palabra clave en el nombre.
+
+<img src="perfil.png">
+
+## Galería (ruta: /Galeria)
+
+Permite subir nuevas imágenes al perfil, cambiar el estado de pública a privada, además de borrar imágenes.
+
+<img src="Galeria.png">
+
+# <div align="center">Diagrama de la base de datos</div>
+
+<div align="center"><img src="Diagramabasededatos.png"></div>
